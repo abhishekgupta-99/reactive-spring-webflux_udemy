@@ -11,9 +11,23 @@ public class FluxAndMonoGeneratorService {
         return Flux.fromIterable(List.of("Abhi", "Gupta")).log();
     }
 
-    public Mono<String> MononameFlux () {
+    public Flux<String> nameFluxUFilter() {
+        return Flux.fromIterable(List.of("Abhi", "Gupta"))
+                .map(String::toUpperCase) //method reference
+                //  .map(s -> s.toUpperCase()) //lambda
+                .log();
+    }
+
+    public Flux<String> nameFluxUFilter_Immutability() {
+        var name_immutable = Flux.fromIterable(List.of("Abhi", "Gupta"));
+        name_immutable.map(String::toUpperCase);
+        return name_immutable;
+    }
+
+    public Mono<String> MononameFlux() {
         return Mono.just("Vicky").log();
     }
+
 
     public static void main(String[] args) {
 
@@ -23,6 +37,12 @@ public class FluxAndMonoGeneratorService {
                 .subscribe(name -> {
                     System.out.println("Flux Name is: " + name);
                 });
+
+        fluxAndMonoGeneratorService.nameFluxUFilter()
+                .subscribe(name -> {
+                    System.out.println("Flux Name is: " + name);
+                });
+
         fluxAndMonoGeneratorService.MononameFlux()
                 .subscribe(name -> {
                     System.out.println("Mono Flux Name is: " + name);
