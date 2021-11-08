@@ -3,7 +3,9 @@ package com.learnreactiveprogramming.service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.Random;
 
 public class FluxAndMonoGeneratorService {
 
@@ -24,6 +26,23 @@ public class FluxAndMonoGeneratorService {
                 .filter(s-> s.length()>len)
                 .map(s-> s.length() +"-"+s);
                 //  .map(s -> s.toUpperCase()) //lambda
+    }
+
+    public Flux<String> nameFluxUFilterFlatMap(int len) {
+        return Flux.fromIterable(List.of("Abhi", "Gupta"))
+                .map(String::toUpperCase) //method reference
+                .flatMap(s-> Flux.fromArray(s.split("")))
+                .log();
+        //  .map(s -> s.toUpperCase()) //lambda
+    }
+
+    public Flux<String> nameFluxUFilterFlatMap_async(int len) {
+        return Flux.fromIterable(List.of("Abhi", "Gupta"))
+                .map(String::toUpperCase) //method reference
+              //  .map(s -> s.toUpperCase()) //lambda
+                .flatMap(s-> Flux.fromArray(s.split("")).delayElements(Duration.ofMillis(2000)))
+                .log();
+
     }
 
     public Flux<String> nameFluxUFilterlength(int len) {
@@ -62,6 +81,11 @@ public class FluxAndMonoGeneratorService {
         fluxAndMonoGeneratorService.MononameFlux()
                 .subscribe(name -> {
                     System.out.println("Mono Flux Name is: " + name);
+                });
+
+        fluxAndMonoGeneratorService.nameFluxUFilterFlatMap(4)
+                .subscribe(name -> {
+                    System.out.println("FlatMapped Flux Name is: " + name);
                 });
 
     }

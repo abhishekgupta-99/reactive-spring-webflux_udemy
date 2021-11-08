@@ -60,4 +60,18 @@ class FluxAndMonoGeneratorServiceTest {
                 .expectNext("5-GUPTA")
                 .verifyComplete();
     }
+
+    @Test
+    void nameFluxUFilterFlatMap() {
+        StepVerifier.create(fluxAndMonoGeneratorService.nameFluxUFilterFlatMap(4))
+                .expectNextCount(9)
+                .verifyComplete();
+    }
+
+    @Test
+    void nameFluxUFilterFlatMap_async() {
+        StepVerifier.create(fluxAndMonoGeneratorService.nameFluxUFilterFlatMap_async(4))
+                .expectNextCount(9)
+                .verifyComplete();
+    }
 }
