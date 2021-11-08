@@ -46,4 +46,18 @@ class FluxAndMonoGeneratorServiceTest {
                 .expectNext("Abhi", "Gupta")
                 .verifyComplete();
     }
+
+    @Test
+    void nameFluxUFilterlength() {
+        StepVerifier.create(fluxAndMonoGeneratorService.nameFluxUFilterlength(4))
+                .expectNext("GUPTA")
+                .verifyComplete();
+    }
+
+    @Test
+    void nameFluxUFilterAppend() {
+        StepVerifier.create(fluxAndMonoGeneratorService.nameFluxUFilterAppend(4))
+                .expectNext("5-GUPTA")
+                .verifyComplete();
+    }
 }

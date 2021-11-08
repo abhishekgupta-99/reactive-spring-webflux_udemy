@@ -18,6 +18,22 @@ public class FluxAndMonoGeneratorService {
                 .log();
     }
 
+    public Flux<String> nameFluxUFilterAppend(int len) {
+        return Flux.fromIterable(List.of("Abhi", "Gupta"))
+                .map(String::toUpperCase) //method reference
+                .filter(s-> s.length()>len)
+                .map(s-> s.length() +"-"+s);
+                //  .map(s -> s.toUpperCase()) //lambda
+    }
+
+    public Flux<String> nameFluxUFilterlength(int len) {
+        return Flux.fromIterable(List.of("Abhi", "Gupta"))
+                .map(String::toUpperCase) //method reference
+                //  .map(s -> s.toUpperCase()) //lambda
+                .filter(s-> s.length()>len)
+                .log();
+    }
+
     public Flux<String> nameFluxUFilter_Immutability() {
         var name_immutable = Flux.fromIterable(List.of("Abhi", "Gupta"));
         name_immutable.map(String::toUpperCase);
